@@ -58,6 +58,16 @@ public class MainForm extends JFrame {
 			}
 
 		});
+		
+		menuProducts.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 
 	public static void main(String[] args) {
