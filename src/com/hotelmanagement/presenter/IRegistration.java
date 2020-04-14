@@ -1,4 +1,4 @@
-package com.hotelmanagement.controller;
+package com.hotelmanagement.presenter;
 
 public interface IRegistration {
 	void emailError();

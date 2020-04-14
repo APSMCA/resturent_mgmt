@@ -2,9 +2,9 @@ package com.hotelmanagement.views;
 
 import javax.swing.*;
 
-import com.hotelmanagement.controller.IRegistration;
 import com.hotelmanagement.controller.RegistrationController;
 import com.hotelmanagement.model.RegistrationModel;
+import com.hotelmanagement.presenter.IRegistration;
 
 import java.awt.event.*;
 

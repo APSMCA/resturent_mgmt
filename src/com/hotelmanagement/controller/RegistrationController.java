@@ -6,6 +6,7 @@ import java.sql.Statement;
 
 import com.hotelmanagement.database.DatabaseManager;
 import com.hotelmanagement.model.RegistrationModel;
+import com.hotelmanagement.presenter.IRegistration;
 import com.hotelmanagement.utils.Validator;
 
 public class RegistrationController {

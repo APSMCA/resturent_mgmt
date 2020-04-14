@@ -2,42 +2,39 @@ package com.hotelmanagement.views;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+
 import javax.swing.*;
 
-public class LoginForm extends JFrame {
+import com.hotelmanagement.controller.LoginController;
+import com.hotelmanagement.presenter.ILogin;
+
+public class LoginForm extends JFrame implements ILogin {
 	private static final long serialVersionUID = 1L;
 
 	private JLabel lblUsername;
 	private JLabel lblPassword;
 	private JTextField txtUsername;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
 	private JButton btnLogin;
 	private JLabel lblRegister;
-	
-	
-	/*
-	 * CheckBox 
-	 * RadioButton
-	 * ComboBox (Dropdown)
-	 * TextArea
-	 * 
-	 */
+
+	private LoginController controller;
 
 	public LoginForm() {
-		// this.setSize(350, 200);
 		this.setBounds(400, 200, 350, 240);
 		this.setTitle("Login Screen");
 		this.setLayout(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		controller = new LoginController(this);
 		initComponent();
 	}
 
 	private void initComponent() {
-		// initilzing component
 		lblUsername = new JLabel("Username");
 		lblPassword = new JLabel("Password");
 		txtUsername = new JTextField();
-		txtPassword = new JTextField();
+		txtPassword = new JPasswordField();
 		btnLogin = new JButton("Login");
 		lblRegister = new JLabel("Register yet register? Click Here");
 		lblRegister.setForeground(Color.BLUE);
@@ -48,7 +45,6 @@ public class LoginForm extends JFrame {
 
 	}
 
-	// placing & sizing components
 	private void setComponentPlacement() {
 		lblUsername.setBounds(20, 20, 90, 30);
 		txtUsername.setBounds(120, 20, 200, 30);
@@ -58,7 +54,6 @@ public class LoginForm extends JFrame {
 		lblRegister.setBounds(60, 140, 260, 30);
 	}
 
-	// adding component in Frame
 	private void addingComponent() {
 		this.add(lblUsername);
 		this.add(txtUsername);
@@ -69,14 +64,7 @@ public class LoginForm extends JFrame {
 
 	}
 
-	// Adding events/listeners
 	private void setupListeners() {
-		/*
-		 * this.addWindowListener(new WindowAdapter() { public void
-		 * windowClosing(WindowEvent we) { dispose(); }
-		 * 
-		 * });
-		 */
 
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
@@ -85,45 +73,14 @@ public class LoginForm extends JFrame {
 			}
 
 		});
-		
-		lblRegister.addMouseListener(new MouseListener() {
 
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				openRegisterPage();
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
 	}
 
 	private void onLoginButtonClick() {
 		boolean isValid = true;
 		String username = txtUsername.getText().trim();
-		String password = txtPassword.getText().trim();
+		String password = new String(txtPassword.getPassword()).trim();
+		controller.performLogin(username, password);
 
 		if (username.isEmpty()) {
 			System.out.println("Username Required");
@@ -141,7 +98,7 @@ public class LoginForm extends JFrame {
 			}
 		}
 	}
-	
+
 	private void openRegisterPage() {
 		RegisterForm rf = new RegisterForm();
 		rf.setVisible(true);
@@ -151,6 +108,30 @@ public class LoginForm extends JFrame {
 	public static void main(String[] args) {
 		LoginForm lf = new LoginForm();
 		lf.setVisible(true);
+	}
+
+	@Override
+	public void loginError() {
+		JOptionPane.showMessageDialog(this, "Invalid username or password", "Login error", JOptionPane.ERROR_MESSAGE);
+	}
+
+	@Override
+	public void usernameRequired() {
+		JOptionPane.showMessageDialog(this, "Please input username", "Username required", JOptionPane.ERROR_MESSAGE);
+		txtPassword.setText("");
+	}
+
+	@Override
+	public void passwordRequired() {
+		JOptionPane.showMessageDialog(this, "Please input password", "Password required", JOptionPane.ERROR_MESSAGE);
+		txtPassword.setText("");
+	}
+
+	@Override
+	public void loginSuccess(int id) {
+		MainForm mf = new MainForm(id);
+		mf.setVisible(true);
+
 	}
 
 }
