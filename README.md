@@ -1,1 +1,1 @@
-# resturent_mgmt
+# hotel_mgmt
