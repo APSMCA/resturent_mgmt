@@ -4,11 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MainForm extends JFrame{
-	
-	private MenuBar menuBar;
-	private Menu menuFile,menuEdit;
-	private MenuItem menuFileNew,menuFileExit;
+public class MainForm extends JFrame {
+
+	private JMenuBar menuBar;
+	private JMenu menuMaster, menuSale, menuReports, menuHelp;
+	private JMenuItem menuProducts, menuCategory, menuSales, menuPurchase, menuAbout;
+	private JDesktopPane desktopPane;
 
 	public MainForm() {
 		this.setTitle("Main Form");
@@ -17,24 +18,48 @@ public class MainForm extends JFrame{
 		this.setExtendedState(MAXIMIZED_BOTH);
 		initComponent();
 	}
-	
+
 	private void initComponent() {
-		menuBar = new MenuBar();
-		menuFile = new Menu("File");
-		menuEdit = new Menu("Edit");
-		menuFileNew = new MenuItem("New");
-		menuFileExit = new MenuItem("Exit");
-		
-		this.setMenuBar(menuBar);
-		//set Menu to MenuBar
-		menuBar.add(menuFile);
-		menuBar.add(menuEdit);
-		
-		//add menuitem to menu
-		menuFile.add(menuFileNew);
-		menuFile.add(menuFileExit);
+		menuBar = new JMenuBar();
+		menuMaster = new JMenu("Master");
+		menuSales = new JMenu("Sales");
+		menuReports = new JMenu("Report");
+		menuHelp = new JMenu("Help");
+
+		menuProducts = new JMenuItem("Products");
+		menuCategory = new JMenuItem("Category");
+
+		desktopPane = new JDesktopPane();
+		this.add(desktopPane);
+
+		addMenus();
+		setupListeners();
 	}
-	
+
+	private void addMenus() {
+		this.setJMenuBar(menuBar);
+		// set Menu to MenuBar
+		menuBar.add(menuMaster);
+		menuBar.add(menuSales);
+		menuBar.add(menuReports);
+		menuBar.add(menuHelp);
+
+		// add menuitem to menu
+		menuMaster.add(menuProducts);
+		menuMaster.add(menuCategory);
+	}
+
+	private void setupListeners() {
+		menuCategory.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Category category = new Category();
+				desktopPane.add(category);
+			}
+
+		});
+	}
+
 	public static void main(String[] args) {
 		MainForm mf = new MainForm();
 		mf.setVisible(true);
