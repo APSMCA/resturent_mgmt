@@ -18,6 +18,7 @@ public class LoginForm extends JFrame implements ILogin {
 	private JPasswordField txtPassword;
 	private JButton btnLogin;
 	private JLabel lblRegister;
+	
 
 	private LoginController controller;
 
@@ -72,6 +73,15 @@ public class LoginForm extends JFrame implements ILogin {
 				onLoginButtonClick();
 			}
 
+		});
+		
+		lblRegister.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg) {
+				RegisterForm rf = new RegisterForm();
+				rf.setVisible(true);
+				
+			}
 		});
 
 	}
@@ -129,6 +139,7 @@ public class LoginForm extends JFrame implements ILogin {
 
 	@Override
 	public void loginSuccess(int id) {
+		dispose();
 		MainForm mf = new MainForm(id);
 		mf.setVisible(true);
 
